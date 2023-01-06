@@ -19,21 +19,21 @@ jobs:
           ghc-version: ${{ matrix.ghc }}
           stack-version: ${{ matrix.stack }}
 
-      - uses: actions/cache@v2
-        name: Cache ~/.stack
-        with:
-          path: ~/.stack
-          key: ${{ runner.os }}-${{ matrix.ghc }}-stack
-
       - name: Install dependencies
         run: |
           stack build --system-ghc --test --bench --no-run-tests --no-run-benchmarks --only-dependencies
 
       - name: Build
         run: |
-          stack build --system-ghc --test --bench --no-run-tests --no-run-benchmarks
+          stack build
           stack exec myblog clean
           stack exec myblog build
+
+      - uses: actions/cache@v2
+        name: Cache ~/.stack
+        with:
+          path: ~/.stack
+          key: ${{ runner.os }}-${{ matrix.ghc }}-stack
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
