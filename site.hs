@@ -64,7 +64,7 @@ postCtx :: Context String
 postCtx =
   mconcat
     [ 
-      field "body" (\item -> return ("Yo " ++ itemBody item)),
+      field "body" (\item -> return ("Somebody once told me " ++ itemBody item)),
       defaultContext,
       dateField "date" "%B %e, %Y"
     ]
